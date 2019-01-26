@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import axios from "axios";
 
-const endpoint = "http://172.17.78.164:3000/api/api/save_data";
+const endpoint = "http://172.17.78.164:3000/api/save_data";
 
 class App extends Component {
   constructor(props) {
