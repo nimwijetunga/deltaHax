@@ -9,7 +9,7 @@ const parse_csv = require('./parse_csv')
 
 app.post('/api/save_data', upload.single('test'), (req, res) => {
     var csv=req.file.buffer.toString('utf8');
-    parse_csv.parse_csv(csv)
+    parse_csv.insert_users_to_db(csv)
 })
 
 app.get('/', (req, res) => res.send('Hello World!'))
