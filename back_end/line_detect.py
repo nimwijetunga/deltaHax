@@ -4,6 +4,7 @@ import numpy as np
 import math
 from pdf2image import convert_from_path
 from helpers import group, group2, list_to_set
+
 def find_lines():
     pages = convert_from_path(sys.argv[1], 500)
 
@@ -73,4 +74,7 @@ def find_lines():
     print(lines)
     return lines
 
-find_lines()
+if __name__ == '__main__':
+    print("here")
+    sys.stdout.flush()
+    #find_lines()

@@ -6,7 +6,7 @@ const csv = require("fast-csv");
 const upload = multer();
 
 const db = require("./db_operations");
-const db_docs = require("./db_operations_docs");
+const line_detect = require("./get_coords");
 
 app.post('/api/save_data', upload.single('file'), async (req, res) => {
     var csv = req.file.buffer.toString('utf8');
@@ -17,10 +17,11 @@ app.post('/api/save_data', upload.single('file'), async (req, res) => {
 })
 
 app.post('/api/get_rect_coords', upload.single('pdf_doc'), async (req, res) => {
-    var buffer = req.file.buffer
-    await db_docs.add_doc(buffer).catch((err) => {
+    let buffer = req.file.buffer
+    console.log(buffer)
+    let data = await line_detect.get_coords(buffer).catch((err) => {
         res.send(JSON.stringify({"posted":false}))
-    }) 
+    })
     res.send(JSON.stringify({"posted":true}))
 })
 
