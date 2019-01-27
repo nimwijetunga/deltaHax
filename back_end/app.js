@@ -16,15 +16,6 @@ app.post('/api/save_data', upload.single('file'), async (req, res) => {
     res.send(JSON.stringify({"posted":true}))
 })
 
-app.post('/api/get_rect_coords', upload.single('pdf_doc'), async (req, res) => {
-    let buffer = req.file.buffer
-    console.log(buffer)
-    let data = await line_detect.get_coords(buffer).catch((err) => {
-        res.send(JSON.stringify({"posted":false}))
-    })
-    res.send(JSON.stringify({"posted":true}))
-})
-
 app.get("/", (req, res) => res.send("Hello World!"));
 
 app.listen(port, () => console.log(`App started on port: ${port}!`));
