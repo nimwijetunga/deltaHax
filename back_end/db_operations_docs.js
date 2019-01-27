@@ -6,6 +6,8 @@ var ref = admin.app().database().ref();
 var docsRef = ref.child('docs');
 var docRef = docsRef.push();
 
+
+
 module.exports = {
     add_doc: function (buffer){
         return new Promise((resolve, reject) => {
