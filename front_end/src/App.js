@@ -2,40 +2,33 @@ import React, { Component } from "react";
 import "./App.css";
 import axios from "axios";
 
-const endpoint = "http://172.17.78.164:3000/api/save_data";
+const endpoint = "http://localhost:8000/api/save_data";
 
 class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { file: "", loaded: 0 };
+    this.state = { file: null, loaded: 0 };
   }
 
   handleChange = e => {
-    console.log("file change: ", e.target);
-    this.setState({ file: e.target.value });
+    this.setState({ file: e.target.files[0] });
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    alert("uploaded file");
-    this.setState({
-      file: e.target.value,
-      loaded: 0
-    });
+
+    const headers = { "Content-type": "multipart/form-data" };
 
     //request to Express endpoint
-    axios
-      .post(endpoint, this.state.file, {
-        onUploadProgress: ProgressEvent => {
-          this.setState({
-            loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
-          });
-        }
-      })
-      .then(res => {
-        console.log(res.statusText);
-      });
+    // Send a POST request
+    var formData = new FormData();
+    formData.append("file", this.state.file, this.state.file.name);
+
+    //formData.append("test", this.state.file);
+    axios.post(endpoint, formData, {
+      headers: headers
+    });
   };
 
   render() {
@@ -46,7 +39,7 @@ class App extends Component {
 
           <form onSubmit={this.handleSubmit}>
             <p>Upload a .csv file: </p>
-            <input type="file" onChange={this.handleChange} />
+            <input type="file" name="" id="" onChange={this.handleChange} />
             <input type="submit" />
           </form>
         </header>
