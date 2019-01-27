@@ -5,8 +5,8 @@ import math
 from pdf2image import convert_from_bytes
 from helpers import group, group2, list_to_set
 
-def find_lines():
-    pages = convert_from_bytes(sys.argv[1], 500)
+def find_lines(pdf_file):
+    pages = convert_from_bytes(pdf_file, 500)
 
     for ind, page in enumerate(pages):
         page.save('lineDetected%s.png' % ind)
