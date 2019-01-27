@@ -53,5 +53,17 @@ module.exports = {
             });
             resolve(true)
         })
+    },
+    get_all_Users: function(){
+        return new Promise((resolve, reject) => {
+            users = []
+            usersRef.on('value', function(snapshot){
+                snapshot.forEach(function(childSnapshot) {
+                    var user = childSnapshot.val()
+                    users.push(user)
+                })
+                resolve(users)
+            })
+        })
     }
 };
