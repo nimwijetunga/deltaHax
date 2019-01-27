@@ -21,26 +21,38 @@ var add_user = function (entry) {
     });
 }
 
+var delete_all_users = function(){
+    return new Promise((resolve, reject) => {
+        usersRef.remove().catch((err) => reject(false))
+        resolve(true)
+    })
+}
+
 
 module.exports = {
      insert_users_to_db: async function(csv_string){
-        const user_arr = CSV.parse(csv_string);
-        count = 0
-        fields = []
-        user_arr.forEach( async function (user) {
-            count_cur = 0
-            user_obj = {}
-            user.forEach((field) => {
-                if(count == 0){
-                    console.log(field)
-                    fields.push(field)
-                }else{
-                    user_obj[fields[count_cur]] = field
-                }
-                count_cur++
-            })
-            count = count + 1
-            // await add_user(user[0], user[1])
-        });
+        return new Promise(async function (resolve, reject) {
+            await delete_all_users().catch((err) => reject(false))
+            const user_arr = CSV.parse(csv_string);
+            count = 0
+            fields = []
+            user_arr.forEach( async function (user) {
+                count_cur = 0
+                user_obj = {}
+                user.forEach((field) => {
+                    if(count == 0){
+                        fields.push(field)
+                    }else{
+                        user_obj[fields[count_cur]] = field
+                    }
+                    count_cur++
+                })
+                count = count + 1
+                await add_user(user_obj).catch((err) => {
+                    reject(false)
+                })
+            });
+            resolve(true)
+        })
     }
 };
