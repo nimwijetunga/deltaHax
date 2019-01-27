@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import "./uploadCSV.css";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 
 const endpoint = "http://localhost:8000/api/save_data";
 
 class uploadCSV extends Component {
   constructor(props) {
     super(props);
-    this.state = { file: null, loaded: 0 };
+    this.state = { file: null, loaded: 0, redirect: false };
   }
 
   handleChange = e => {
@@ -30,12 +31,17 @@ class uploadCSV extends Component {
         headers: headers
       })
       .then(res => {
-        alert("logged");
+        window.alert("loaded");
+        this.setState({ redirect: true });
       });
   };
 
   render() {
-    return (
+    const { redirect } = this.state;
+
+    return redirect ? (
+      <Redirect to="/uploadPDF" />
+    ) : (
       <div className="App">
         <header className="App-header">
           <h1>PDF Filler</h1>
