@@ -28,7 +28,6 @@ var delete_all_users = function(){
     })
 }
 
-
 module.exports = {
      insert_users_to_db: async function(csv_string){
         return new Promise(async function (resolve, reject) {
