@@ -7,9 +7,12 @@ const upload = multer();
 
 const parse_csv = require('./parse_csv')
 
-app.post('/api/save_data', upload.single('test'), (req, res) => {
+app.post('/api/save_data', upload.single('test'), async (req, res) => {
     var csv=req.file.buffer.toString('utf8');
-    parse_csv.insert_users_to_db(csv)
+    await parse_csv.insert_users_to_db(csv).catch((err) => {
+        res.send(JSON.stringify({"posted":false}))
+    })
+    res.send(JSON.stringify({"posted":true}))
 })
 
 app.get('/', (req, res) => res.send('Hello World!'))
