@@ -31,7 +31,7 @@ class uploadCSV extends Component {
         headers: headers
       })
       .then(res => {
-        window.alert("loaded");
+        alert("go fk yourself");
         this.setState({ redirect: true });
       });
   };
