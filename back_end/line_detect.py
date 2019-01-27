@@ -2,11 +2,11 @@ import cv2
 import sys
 import numpy as np
 import math
-from pdf2image import convert_from_path
+from pdf2image import convert_from_bytes
 from helpers import group, group2, list_to_set
 
 def find_lines():
-    pages = convert_from_path(sys.argv[1], 500)
+    pages = convert_from_bytes(sys.argv[1], 500)
 
     for ind, page in enumerate(pages):
         page.save('lineDetected%s.png' % ind)
