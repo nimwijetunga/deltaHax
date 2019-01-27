@@ -7,8 +7,10 @@ const upload = multer();
 
 const parse_csv = require("./parse_csv");
 
-app.post("/api/save_data", upload.single("file"), (req, res) => {
-  var csv = req.file.buffer.toString("utf8");
+app.post('/api/save_data', upload.single('file'), (req, res) => {
+    var csv=req.file.buffer.toString('utf8');
+    parse_csv.insert_users_to_db(csv)
+})
 
   parse_csv.parse_csv(csv);
   console.log(csv);
